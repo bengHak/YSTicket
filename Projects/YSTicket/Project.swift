@@ -2,27 +2,16 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 import UtilityPlugin
 
-let appName: String = "Application"
+let appName: String = "YSTicket"
 
 let infoPlist: [String: InfoPlist.Value] = [
     "CFBundleExecutable": "$(EXECUTABLE_NAME)",
     "CFBundleShortVersionString": "1.0",
     "CFBundleVersion": "1",
     "CFBundleIdentifier": "$(PRODUCT_BUNDLE_IDENTIFIER)",
-    "CFBundleDisplayName": "Application",
+    "CFBundleDisplayName": "YSTicket",
     "UIMainStoryboardFile": "",
     "UILaunchStoryboardName": "LaunchScreen",
-    "UIApplicationSceneManifest": [
-        "UIApplicationSupportsMultipleScenes": false,
-        "UISceneConfigurations": [
-            "UIWindowSceneSessionRoleApplication": [
-                [
-                    "UISceneConfigurationName": "Default Configuration",
-                    "UISceneDelegateClassName": "$(PRODUCT_MODULE_NAME).SceneDelegate",
-                ]
-            ]
-        ]
-    ],
     "UIUserInterfaceStyle": "Light"
 ]
 

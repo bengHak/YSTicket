@@ -7,7 +7,7 @@
 
 import ProjectDescription
 
-let iOSTargetVersion: String = "15.0"
+let iOSTargetVersion: String = "11.0"
 let deploymentTarget: DeploymentTarget = .iOS(
     targetVersion: iOSTargetVersion,
     devices: .iphone

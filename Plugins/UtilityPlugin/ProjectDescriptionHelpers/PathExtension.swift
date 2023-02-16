@@ -8,7 +8,7 @@ extension ProjectDescription.Path {
         return .relativeToRoot("Projects/Modules/\(pathString)")
     }
     public static var app: Self {
-        return .relativeToRoot("Projects/Applicaiton")
+        return .relativeToRoot("Projects/YSTicket")
     }
 }
 

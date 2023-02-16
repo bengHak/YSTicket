@@ -2,9 +2,9 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let workspace = Workspace(
-    name: "Application",
+    name: "YSTicket",
     projects: [
-        "Projects/Application",
+        "Projects/YSTicket",
         "Projects/Modules/DataKit",
         "Projects/Modules/DomainKit",
         "Projects/Modules/FoundationKit",
@@ -13,9 +13,9 @@ let workspace = Workspace(
     ],
     schemes: [
         Scheme(
-            name: "ApplicationApp",
+            name: "YSTicketApp",
             buildAction: .buildAction(targets: [
-                .project(path: "Projects/Application", target: "Application"),
+                .project(path: "Projects/YSTicket", target: "YSTicket"),
                 .project(path: "Projects/Modules/DataKit", target: "DataKit"),
                 .project(path: "Projects/Modules/DomainKit", target: "DomainKit"),
                 .project(path: "Projects/Modules/FoundationKit", target: "FoundationKit"),

@@ -9,7 +9,7 @@ import PresentationKit
 final class RootViewController: UIViewController {
     // MARK: - UI properties
     private let label: UILabel = .init().then {
-        $0.text = "Application"
+        $0.text = "YSTicket"
         $0.numberOfLines = 2
         $0.textAlignment = .center
         $0.textColor = .white
