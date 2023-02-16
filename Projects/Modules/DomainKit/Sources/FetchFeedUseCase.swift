@@ -7,13 +7,21 @@
 //
 
 import Foundation
+import RxSwift
 
 public protocol FetchFeedUseCaseProtocol {
-    func fetchFeeds()
+    func fetchFeeds() -> Single<MainFeedDTO>
 }
 
 public class FetchFeedUseCase: FetchFeedUseCaseProtocol {
-    public func fetchFeeds() {
-        
+    
+    private let feedRepository: FeedRepositoryProtocol
+    
+    public init(feedRepository: FeedRepositoryProtocol) {
+        self.feedRepository = feedRepository
+    }
+    
+    public func fetchFeeds() -> Single<MainFeedDTO> {
+        return feedRepository.fetchMainFeed()
     }
 }

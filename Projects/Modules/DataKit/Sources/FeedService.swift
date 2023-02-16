@@ -21,6 +21,8 @@ public class FeedService: FeedServiceProtocol {
     
     private let provider: MoyaProvider<FeedAPI> = .init()
     
+    public init() {}
+    
     public func fetchFeeds() -> Single<MainFeedDTO> {
         provider.rx.request(.fetchMainFeed)
             .filterSuccessfulStatusCodes()

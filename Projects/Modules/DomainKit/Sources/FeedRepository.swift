@@ -10,5 +10,5 @@ import Foundation
 import RxSwift
 
 public protocol FeedRepositoryProtocol {
-    func fetchMainFeed()
+    func fetchMainFeed() -> Single<MainFeedDTO>
 }
