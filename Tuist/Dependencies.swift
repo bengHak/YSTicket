@@ -14,7 +14,7 @@ let spm = SwiftPackageManagerDependencies([
     .remote(url: "https://github.com/SnapKit/SnapKit", requirement: .upToNextMajor(from: "5.6.0")),
     
     // Networking
-    .remote(url: "https://github.com/onevcat/Kingfisher", requirement: .upToNextMajor(from: "7.4.1")),
+    .remote(url: "https://github.com/onevcat/Kingfisher", requirement: .upToNextMajor(from: "6.3.1")),
     .remote(url: "https://github.com/Moya/Moya", requirement: .upToNextMajor(from: "15.0.3")),
     
     // Testing
