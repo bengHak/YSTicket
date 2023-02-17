@@ -16,6 +16,7 @@ let frameworkTargets: [Target] = FrameworkFactory(
         frameworkDependencies: [
             .SPM.RxSwift,
             .SPM.RxCocoa,
+            .SPM.RxDataSources,
             .SPM.Moya,
             .SPM.RxMoya,
             .SPM.Then,

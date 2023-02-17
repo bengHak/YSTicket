@@ -27,6 +27,7 @@ final class RootViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        dismissSplashViewAfter1Sec()
     }
     
     // MARK: - Helpers
@@ -35,5 +36,18 @@ final class RootViewController: UIViewController {
         label.snp.makeConstraints {
             $0.center.equalToSuperview()
         }
+    }
+    
+    private func dismissSplashViewAfter1Sec() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            self?.showMainFeedViewController()
+        }
+    }
+    
+    private func showMainFeedViewController() {
+        let window: UIWindow? = view.window
+        let viewModel: MainFeedViewModelProtocol = DIContainer.container.resolve(MainFeedViewModelProtocol.self)!
+        window?.rootViewController = MainFeedViewController(viewModel: viewModel)
+        window?.makeKeyAndVisible()
     }
 }

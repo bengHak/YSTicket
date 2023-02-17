@@ -15,7 +15,7 @@ public extension TargetDependency.SPM {
     // Rx
     static let RxSwift = Self.external("RxSwift")
     static let RxCocoa = Self.external("RxCocoa")
-    
+    static let RxDataSources = Self.external("RxDataSources")
     
     // Utils
     static let Then = Self.external("Then")

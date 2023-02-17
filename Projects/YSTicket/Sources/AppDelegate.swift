@@ -3,6 +3,7 @@ import UIKit
 import DataKit
 import DIKit
 import DomainKit
+import PresentationKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,11 +23,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DIContainer.container.register(FeedServiceProtocol.self) { _ in
             return FeedService()
         }
-        DIContainer.container.register(FeedRepository.self) { r in
+        DIContainer.container.register(FeedRepositoryProtocol.self) { r in
             return FeedRepository(feedService: r.resolve(FeedServiceProtocol.self)!)
         }
         DIContainer.container.register(FetchFeedUseCase.self) { r in
             return FetchFeedUseCase(feedRepository: r.resolve(FeedRepositoryProtocol.self)!)
+        }
+        DIContainer.container.register(MainFeedViewModelProtocol.self) { r in
+            return MainFeedViewModel(fetchFeedUseCase: r.resolve(FetchFeedUseCase.self)!)
         }
     }
     
