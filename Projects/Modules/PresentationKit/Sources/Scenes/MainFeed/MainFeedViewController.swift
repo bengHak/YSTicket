@@ -25,6 +25,15 @@ public final class MainFeedViewController: UIViewController {
         case youtube([YSTv])
         case recommend(YSEvent)
         case new(YSEvent)
+        
+        var value: YSEvent? {
+            switch self {
+            case .recommend(let event), .new(let event):
+                return event
+            default:
+                return nil
+            }
+        }
     }
     
     // MARK: - UI properties
@@ -204,7 +213,17 @@ public final class MainFeedViewController: UIViewController {
         .disposed(by: disposeBag)
     }
     
-    private func bindCollectionView() { }
+    private func bindCollectionView() {
+        collectionView.rx.modelSelected(Item.self)
+            .bind { [weak self] item in
+                guard let self,
+                      let ysEvent = item.value else {
+                    return
+                }
+                let vc: FeedDetailViewController = .init(ysEvent: ysEvent)
+                self.navigationController?.pushViewController(vc, animated: true)
+            }.disposed(by: disposeBag)
+    }
 }
 
 extension MainFeedViewController: UICollectionViewDelegateFlowLayout {
