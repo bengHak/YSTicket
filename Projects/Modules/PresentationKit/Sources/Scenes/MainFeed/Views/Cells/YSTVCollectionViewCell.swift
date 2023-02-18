@@ -34,12 +34,14 @@ final class YSTVCollectionViewCell: UICollectionViewCell {
     static let identifier: String = "YSTVCollectionViewCell"
     private let disposeBag: DisposeBag = .init()
     private let youtubeList: BehaviorRelay<[YSTv]> = .init(value: [])
+    private var didTapCellToOpenYoutube: ((URL) -> Void)?
     private lazy var datasource: YSDatasource<SectionModel<Void, Item>> = self.createDatasource()
     
     // MARK: - Lifecycles
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureView()
+        bindCollectionView()
     }
     
     required init?(coder: NSCoder) {
@@ -80,7 +82,21 @@ final class YSTVCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func bind(_ data: [YSTv]) {
+    private func bindCollectionView() {
+        collectionView.rx.modelSelected(YSTv.self)
+            .bind { [weak self] (ystv: YSTv) in
+                guard let self,
+                      let didTapCellToOpenYoutube = self.didTapCellToOpenYoutube,
+                      let urlString = ystv.tvVideoURL,
+                      let url = URL(string: urlString) else {
+                    return
+                }
+                didTapCellToOpenYoutube(url)
+            }.disposed(by: disposeBag)
+    }
+    
+    func bind(_ data: [YSTv], _ openYoutubeURL: @escaping (_ url: URL) -> Void) {
         youtubeList.accept(data)
+        didTapCellToOpenYoutube = openYoutubeURL
     }
 }

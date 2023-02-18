@@ -9,6 +9,7 @@
 import RxCocoa
 import RxDataSources
 import RxSwift
+import SafariServices
 import SnapKit
 import Then
 import UIKit
@@ -78,6 +79,7 @@ public final class MainFeedViewController: UIViewController {
     // MARK: - Helpers
     private func configureView() {
         view.backgroundColor = .white
+        title = "여신티켓"
         view.addSubview(collectionView)
     }
     
@@ -102,16 +104,22 @@ public final class MainFeedViewController: UIViewController {
     
     // swiftlint:disable cyclomatic_complexity
     private func createDatasource() -> YSDatasource<SectionModel<Void, Item>> {
-        return .init { (_, collectionView, indexPath, item) in
+        return .init { [weak self] (_, collectionView, indexPath, item) in
             switch item {
             case .youtube(let item):
-                guard let cell = collectionView.dequeueReusableCell(
+                guard let self = self,
+                      let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: YSTVCollectionViewCell.identifier,
                     for: indexPath
                 ) as? YSTVCollectionViewCell else {
                     return UICollectionViewCell()
                 }
-                cell.bind(item)
+                
+                cell.bind(item) { (url: URL) in
+                    let sfVC: SFSafariViewController = .init(url: url)
+                    self.navigationController?.pushViewController(sfVC, animated: true)
+                }
+                
                 return cell
             case .recommend(let item):
                 guard let cell = collectionView.dequeueReusableCell(
@@ -132,16 +140,23 @@ public final class MainFeedViewController: UIViewController {
                 cell.bind(item)
                 return cell
             }
-        } configureSupplementaryView: { _, collectionView, kind, indexPath in
+        } configureSupplementaryView: { [weak self] _, collectionView, kind, indexPath in
             switch indexPath.section {
             case 0:
-                guard let reusableView = collectionView.dequeueReusableSupplementaryView(
+                guard let self = self,
+                      let reusableView = collectionView.dequeueReusableSupplementaryView(
                     ofKind: kind,
                     withReuseIdentifier: YoutubeHeader.identifier,
                     for: indexPath
                 ) as? YoutubeHeader else {
                     return UICollectionReusableView()
                 }
+
+                reusableView.bind {
+                    let vc = YoutubeListViewController(youtubeData: self.viewModel.youtubeData)
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+                
                 return reusableView
             case 1:
                 guard let reusableView = collectionView.dequeueReusableSupplementaryView(

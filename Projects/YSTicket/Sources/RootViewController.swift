@@ -47,7 +47,9 @@ final class RootViewController: UIViewController {
     private func showMainFeedViewController() {
         let window: UIWindow? = view.window
         let viewModel: MainFeedViewModelProtocol = DIContainer.container.resolve(MainFeedViewModelProtocol.self)!
-        window?.rootViewController = MainFeedViewController(viewModel: viewModel)
+        let vc: MainFeedViewController = .init(viewModel: viewModel)
+        let navVC: UINavigationController = .init(rootViewController: vc)
+        window?.rootViewController = navVC
         window?.makeKeyAndVisible()
     }
 }

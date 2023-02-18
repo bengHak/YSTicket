@@ -35,9 +35,42 @@ public class FeedService: FeedServiceProtocol {
                     newEventList: $0.results?.newEventList
                 )
             }
-            .catch { error in
-                return .error(FeedServiceError.failedToFetchFeed)
+            .catch { [weak self] error in
+                guard let self else {
+                    return .error(FeedServiceError.failedToFetchFeed)
+                }
+                return self.getLocalJsonFile()
             }
+    }
+    
+    /*
+     API 사용량 초과 에러 대응용 로컬파일 불러오는 함수
+     {
+         "error": {
+             "name": "usageLimitError",
+             "header": "Usage limit reached",
+             "message": "Your team plan allows 1000 mock server calls per month. Contact your team Admin to up your limit."
+         }
+     }
+     */
+    private func getLocalJsonFile() -> Single<MainFeedDTO> {
+        if let path = Bundle.main.path(forResource: "response", ofType: "json") {
+            do {
+                let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+                let decoder = JSONDecoder()
+                let response = try decoder.decode(MainFeedResponse.self, from: data)
+                return .just(
+                    .init(
+                        ysTvList: response.results?.ysTvList,
+                        recommendedEventList: response.results?.recommendEventList,
+                        newEventList: response.results?.newEventList
+                    )
+                )
+            } catch {
+                print("Error decoding JSON: \(error)")
+            }
+        }
+        return .error(FeedServiceError.failedToFetchFeed)
     }
 }
 

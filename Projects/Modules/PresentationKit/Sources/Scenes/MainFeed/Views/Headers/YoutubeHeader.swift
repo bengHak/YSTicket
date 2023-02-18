@@ -6,6 +6,7 @@
 //  Copyright © 2023 kr.byunghak. All rights reserved.
 //
 
+import RxSwift
 import SnapKit
 import Then
 import UIKit
@@ -26,6 +27,7 @@ final class YoutubeHeader: UICollectionReusableView {
     
     // MARK: - Properties
     static let identifier: String = "YoutubeHeader"
+    private var disposeBag: DisposeBag = .init()
     
     // MARK: - Lifecycles
     override init(frame: CGRect) {
@@ -49,5 +51,13 @@ final class YoutubeHeader: UICollectionReusableView {
             $0.trailing.equalToSuperview().offset(-10)
             $0.bottom.equalToSuperview().offset(-10)
         }
+    }
+    
+    func bind(_ didTapMoreButton: @escaping () -> Void) {
+        let bag: DisposeBag = .init()
+        moreButton.rx.tap
+            .bind { didTapMoreButton() }
+            .disposed(by: bag)
+        disposeBag = bag
     }
 }

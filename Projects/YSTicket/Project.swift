@@ -10,6 +10,7 @@ let infoPlist: [String: InfoPlist.Value] = [
     "CFBundleVersion": "1",
     "CFBundleIdentifier": "$(PRODUCT_BUNDLE_IDENTIFIER)",
     "CFBundleDisplayName": "YSTicket",
+    "UISupportedInterfaceOrientations": ["UIInterfaceOrientationPortrait"],
     "UIMainStoryboardFile": "",
     "UILaunchStoryboardName": "LaunchScreen",
     "UIUserInterfaceStyle": "Light"

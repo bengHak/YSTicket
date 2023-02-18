@@ -17,7 +17,7 @@ final class YSTVCell: UICollectionViewCell {
     // MARK: - UI properties
     private let thumbnailImageView: UIImageView = .init().then {
         $0.contentMode = .scaleAspectFill
-        $0.layer.cornerRadius = 14
+        $0.layer.cornerRadius = 10
         $0.clipsToBounds = true
     }
     
@@ -67,6 +67,6 @@ final class YSTVCell: UICollectionViewCell {
               let url = URL(string: urlString) else {
             return
         }
-        thumbnailImageView.kf.setImage(with: url)
+        thumbnailImageView.kf.setImage(with: url, placeholder: UIImage(named: "PlaceholderImage"))
     }
 }

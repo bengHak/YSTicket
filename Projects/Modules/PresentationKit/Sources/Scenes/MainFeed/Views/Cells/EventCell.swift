@@ -12,6 +12,7 @@ import Then
 import UIKit
 
 import DomainKit
+import FoundationKit
 
 final class EventCell: UICollectionViewCell {
     // MARK: - UI properties
@@ -62,10 +63,15 @@ final class EventCell: UICollectionViewCell {
         $0.layer.cornerRadius = 15
     }
     
-    /// 가격 (만원 단위)
+    /// 가격
     private let priceLabel: UILabel = .init().then {
         $0.textColor = .pink01
         $0.font = .systemFont(ofSize: 18, weight: .semibold)
+    }
+    
+    private let priceCurrency: UILabel = .init().then {
+        $0.textColor = .gray02
+        $0.font = .systemFont(ofSize: 16, weight: .semibold)
     }
     
     /// 관심도
@@ -142,6 +148,7 @@ final class EventCell: UICollectionViewCell {
             reservationButton,
             heartButton,
             priceLabel,
+            priceCurrency,
             interestLabel,
             interestCount,
             reviewLabel,
@@ -193,6 +200,10 @@ final class EventCell: UICollectionViewCell {
             $0.leading.equalTo(thumbnailImageView.snp.trailing).offset(10)
             $0.bottom.equalToSuperview()
         }
+        priceCurrency.snp.makeConstraints {
+            $0.centerY.equalTo(priceLabel)
+            $0.leading.equalTo(priceLabel.snp.trailing)
+        }
         interestLabel.snp.makeConstraints {
             $0.height.equalTo(16)
             $0.trailing.equalTo(interestCount.snp.leading)
@@ -238,10 +249,12 @@ final class EventCell: UICollectionViewCell {
         placeLabel.text = data.displayName
         titleLabel.text = data.name
         descLabel.text = data.comment
-        priceLabel.text = "\(data.price ?? 0)"
-        interestCount.text = "\(data.wishCount ?? 0)"
-        reviewCount.text = "\(data.reviewCount ?? 0)"
-        starCount.text = "\(data.rateScore ?? 0)"
+        let (priceText, unitText) = NumberUtil.buildCompressedPrice(Double(data.price ?? 0))
+        priceLabel.text = priceText
+        priceCurrency.text = "\(unitText)\(data.currencyName ?? .원)"
+        interestCount.text = NumberUtil.buildCompressedNumber(data.wishCount ?? 0)
+        reviewCount.text = NumberUtil.buildCompressedNumber(data.reviewCount ?? 0)
+        starCount.text = NumberUtil.buildCompressedNumber(data.rateScore ?? 0)
         
         reservationButton.isHidden = data.reservationYn == .n
     }
