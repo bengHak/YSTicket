@@ -20,11 +20,11 @@ tuist generate
 4. Build and run
 ```
 // Run Simulator
-1. Build "ApplicationApp" and run it on the simulator
+1. Build "YSTicketApp" and run it on the simulator
 
 // Run on device
-2-1. Select a team from the "Signing & Capabilities" of the "ApplicationApp" target of the "ApplicationApp" project.
-2-2. Run "ApplicationApp" on a practical machine.
+2-1. Select a team from the "Signing & Capabilities" of the "YSTicketApp" target of the "YSTicketApp" project.
+2-2. Run "YSTicketApp" on a practical machine.
 ```
 
 ## Reference 
